@@ -22,10 +22,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#151E3D',
-    width: 130,
+    width: 150,
     height: 30,
     borderRadius: 15,
-    margin: 10
+    margin: 10,
   },
   txtBtn: {
     color: 'whitesmoke'
