@@ -40,13 +40,19 @@ const styles = StyleSheet.create({
     color: 'whitesmoke'
   },
   inputContainer: {
-    marginTop: 30
+    marginTop: 30,
+  },
+  selectContainer: {
+    borderWidth: 1,
+    borderRadius: 10,
+    margin: 15,
+    borderColor: 'whitesmoke'
   },
   pickerContent: {
-    color: 'gray'
+    fontSize: 18
   },
   pickerContainer: {
-    margin: 10
+    margin: 10,
   },
   txtPicker: {
     color: 'whitesmoke',

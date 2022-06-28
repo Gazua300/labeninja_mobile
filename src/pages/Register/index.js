@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { Picker } from '@react-native-picker/picker'
 import { url } from '../../constants/urls'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import styles from './style'
 import {
   View,
@@ -41,14 +40,6 @@ export default function Register(props){
   }
 
 
-  const logout = async()=>{
-    try{
-      await AsyncStorage.clear()
-      props.navigation.navigate('Home')
-    }catch(e){
-      alert(e)
-    }
-  }
 
 
   return(
@@ -87,6 +78,7 @@ export default function Register(props){
           />
 
         <Text style={styles.txtPicker}>Formas de pagamento:</Text>
+        <View style={styles.selectContainer}>
         <Picker style={styles.pickerContainer}
           selectedValue={payment}
           onValueChange={(itemValue, itemIndex)=>
@@ -104,6 +96,7 @@ export default function Register(props){
             label='Pix' value='Pix'/>
 
         </Picker>
+        </View>
 
         <View style={styles.btnContainer}>
           <TouchableOpacity style={styles.btnNav}

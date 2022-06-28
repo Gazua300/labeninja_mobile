@@ -62,26 +62,23 @@ export default function Detail(props){
                     value={email}
                     placeholder='nome@email.com'
                     placeholderTextColor={'whitesmoke'}/>
-                {/* <TextInput style={styles.input}
-                    onChangeText={setJobName}
-                    value={jobName}
-                    placeholderTextColor={'whitesmoke'}
-                    placeholder='Nome do serviço'/> */}
-                <Picker style={{margin:10}}
-                    selectedValue={payment}
-                    onValueChange={(itemValue, itemIndex)=>
-                    setPayment(itemValue)}>                    
-                    
-                    <Picker.Item style={styles.pickerContent}
-                        label="Débito" value='Débito'/>
-                    <Picker.Item style={styles.pickerContent}
-                        label="Crédito" value='Crédito'/>
-                    <Picker.Item style={styles.pickerContent}
-                        label="Pix" value='Pix'/>
-                    <Picker.Item style={styles.pickerContent}
-                        label="Boleto" value='Boleto'/>
+                <View style={styles.pickerContainer}>
+                    <Picker 
+                        selectedValue={payment}
+                        onValueChange={(itemValue, itemIndex)=>
+                        setPayment(itemValue)}>                    
+                        
+                        <Picker.Item style={styles.pickerContent}
+                            label="Débito" value='Débito'/>
+                        <Picker.Item style={styles.pickerContent}
+                            label="Crédito" value='Crédito'/>
+                        <Picker.Item style={styles.pickerContent}
+                            label="Pix" value='Pix'/>
+                        <Picker.Item style={styles.pickerContent}
+                            label="Boleto" value='Boleto'/>
 
-                </Picker>
+                    </Picker>
+                </View>
                 <TouchableOpacity style={styles.button}
                     onPress={contractJob}>
                     <Text style={{color:'whitesmoke'}}>Contratar</Text>
@@ -118,8 +115,14 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         color: 'whitesmoke'
     },
+    pickerContainer: {
+        borderWidth: 1,
+        borderColor: 'whitesmoke',
+        borderRadius: 10,
+        margin: 15
+    },
     pickerContent: {
-        color: 'gray'
+        fontSize: 18
     },
     button: {
         backgroundColor: '#151E3D',

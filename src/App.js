@@ -18,7 +18,7 @@ export default function App(){
   return(
         <Provider>
           <NavigationContainer>
-            <StatusBar style='auto'/>
+            <StatusBar backgroundColor='#151E3D'/>
             <Stack.Navigator
               initialRouteName='Home'
               screenOptions={screenOptions}>
