@@ -22,7 +22,6 @@ export default function Register(props){
   const [price, setPrice] = useState('')
   const [payment, setPayment] = useState()
   const [dueDate, setDueDate] = useState('')
-  const [token, setToken] = useState('')
 
 
 

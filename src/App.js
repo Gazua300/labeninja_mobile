@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Provider } from './global/Context'
@@ -7,12 +7,13 @@ import Home from './pages/Home'
 import List from './pages/List'
 import Register from './pages/Register'
 import Cart from './pages/Cart'
+import Detail from './pages/Detail'
+
 
 
 const Stack = createNativeStackNavigator()
 
 export default function App(){
-
 
   return(
         <Provider>
@@ -96,6 +97,26 @@ export default function App(){
                   </Pressable>
                 )
               })}/>
+
+              <Stack.Screen
+                name='Detalhes'
+                component={Detail}
+                options={({navigation})=> ({
+                  headerLeft: ()=>(
+                    <Pressable style={styles.btnNav}
+                      onPress={()=> navigation.navigate('Cart')}>
+                      <Text style={styles.txtBtn}>Carrinho</Text>
+                    </Pressable>
+                  ),
+                  title: 'Contratar serviço',
+                  headerRight: ()=>(
+                    <Pressable style={styles.btnNav}
+                      onPress={()=> navigation.navigate('Home')}>
+                      <Text style={styles.txtBtn}>Home</Text>
+                    </Pressable>
+                  )
+                })}/>
+                
             </Stack.Navigator>
           </NavigationContainer>
         </Provider>

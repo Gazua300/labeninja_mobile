@@ -17,17 +17,12 @@ import {
 
 
 export default function List(props){
-  const { addToCart, contractJob } = useContext(Context)
-  const [jobs, setJobs] = useState([])
+  const { addToCart, getAllJobs, jobs, setJob } = useContext(Context)  
   const [refreshing, setRefreshing] = useState(false)
 
 
   useEffect(()=>{
-    axios.get(`${url}/jobs`).then(res=>{
-      setJobs(res.data)
-    }).catch(err=>{
-      alert(err.response.data)
-    })
+    getAllJobs()
   }, [])
 
 
@@ -36,6 +31,16 @@ export default function List(props){
     setTimeout(()=>{
       setRefreshing(false)
     }, 2000)
+  }
+
+
+  const getJobById = (id)=>{
+    axios.get(`${url}/job/${id}`).then(res=>{
+      setJob(res.data)
+      props.navigation.navigate('Detalhes')
+    }).catch(e=>{
+      alert(e.response.data)
+    })
   }
 
 
@@ -59,7 +64,7 @@ export default function List(props){
                 <Text style={styles.txtBtn}><Text style={styles.legend}>Prazo:</Text> {convertDate(job.dueDate)}</Text>
                 <View style={styles.btnContainer}>
                   <TouchableOpacity style={styles.btnNav}
-                    onPress={()=> contractJob(job)}>
+                    onPress={()=> getJobById(job.id)}>
                     <Text style={styles.txtBtn}>Contratar serviço</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.btnNav}

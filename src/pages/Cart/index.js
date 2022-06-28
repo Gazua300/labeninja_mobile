@@ -1,5 +1,7 @@
 import React, { useContext } from 'react'
 import Context from '../../global/Context'
+import axios from 'axios'
+import { url } from '../../constants/urls'
 import styles from './style'
 import {
   View,
@@ -13,7 +15,7 @@ import {
 
 
 export default function Cart(props){
-  const { cart, setCart, contractJob } = useContext(Context)
+  const { cart, setCart, setJob } = useContext(Context)
 
 
   const removeFromCart = (id)=>{
@@ -33,6 +35,19 @@ export default function Cart(props){
   })
 
 
+  const getJobById = (id)=>{
+    axios.get(`${url}/job/${id}`).then(res=>{
+      setJob(res.data)
+      props.navigation.navigate('Detalhes')
+    }).catch(e=>{
+      alert(e.response.data)
+    })
+  }
+
+
+  
+
+
   return(
     <ImageBackground
       source={ require('../../../assets/ninjaWallpaper.jpg') }
@@ -40,9 +55,10 @@ export default function Cart(props){
 
         <ScrollView>
           {cart && cart.map(car=>{
+            {console.log(car)}
             return(
-              <View style={styles.cardContainer}>
-                <View style={styles.cardContent} key={car.id}>
+              <View style={styles.cardContainer} key={car.id}>
+                <View style={styles.cardContent}>
                   <Text style={styles.txtBtn}>{car.title}</Text>
                   <Text style={styles.txtBtn}>R$ {car.price}</Text>
                   <TouchableOpacity style={styles.btnNav}
@@ -52,7 +68,7 @@ export default function Cart(props){
                 </View>
                 <View style={styles.btnContract}>
                   <TouchableOpacity style={styles.btnNav}
-                    onPress={()=> contractJob(car)}>
+                    onPress={()=> getJobById(car.id)}>
                     <Text style={styles.txtBtn}>Contratar</Text>
                   </TouchableOpacity>
                 </View>
