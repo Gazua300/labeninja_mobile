@@ -6,4 +6,3 @@ Aplicação marketplace de serviços para dispositivos android. O usúario cadas
     <img src="imgREADME/register.jpeg" width='300'>
     <img src="imgREADME/list.jpeg" width='300'>
 </p>
-
