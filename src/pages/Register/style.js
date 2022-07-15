@@ -5,10 +5,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)'
   },
   bgImage: {
     flex: 1
+  },
+  formContainer: {
+    marginTop: 50
   },
   btnContainer: {
     display: 'flex',
@@ -36,29 +40,18 @@ const styles = StyleSheet.create({
     borderColor: 'whitesmoke',
     height: 40,
     fontSize: 18,
-    paddingLeft: 15,
+    paddingHorizontal: 15,
     color: 'whitesmoke'
   },
-  inputContainer: {
-    marginTop: 30,
-  },
-  selectContainer: {
+  textarea: {
+    margin: 10,
     borderWidth: 1,
     borderRadius: 10,
-    margin: 15,
-    borderColor: 'whitesmoke'
-  },
-  pickerContent: {
-    fontSize: 18
-  },
-  pickerContainer: {
-    margin: 10,
-  },
-  txtPicker: {
-    color: 'whitesmoke',
-    marginTop: 25,
-    marginLeft: 20,
-    fontSize: 18
+    borderColor: 'whitesmoke',
+    height: 80,
+    fontSize: 18,
+    paddingHorizontal: 15,
+    color: 'whitesmoke'
   }
 })
 

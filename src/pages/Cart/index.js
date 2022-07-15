@@ -8,8 +8,8 @@ import {
   ScrollView,
   Text,
   ImageBackground,
-  Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native'
 
 
@@ -25,14 +25,28 @@ export default function Cart(props){
     setCart(newCart)
   }
 
-  const clearCart = ()=>{
-    setCart([])
-  }
-
+  
   let total = 0
   cart && cart.forEach((item)=>{
     total += item.price
   })
+
+
+  const confirm = ()=>{
+    Alert.alert(
+      'Atenção!',
+      'Isso irá apagar todos os itens do carrinho. Deseja continuar?',
+      [
+        {
+          text:'Cancelar'
+        },
+        {
+          text:'Ok',
+          onPress: ()=> setCart([])
+        }
+      ]
+    )
+  }
 
 
   const getJobById = (id)=>{
@@ -52,7 +66,7 @@ export default function Cart(props){
     <ImageBackground
       source={ require('../../../assets/ninjaWallpaper.jpg') }
       style={styles.bgImage}>
-
+        <View style={styles.container}>
         <ScrollView>
           {cart && cart.map(car=>{
             {console.log(car)}
@@ -79,7 +93,7 @@ export default function Cart(props){
           <View style={styles.cardTotal}>
             <Text style={styles.txtBtn}>Total: R$ {total}</Text>
             <TouchableOpacity style={styles.btnClearCart}
-              onPress={clearCart}>
+              onPress={confirm}>
               <Text style={styles.txtBtn}>Limpar carrinho</Text>
             </TouchableOpacity>
           </View>
@@ -90,7 +104,7 @@ export default function Cart(props){
             </TouchableOpacity>
           </View>
         </ScrollView>
-
+        </View>
     </ImageBackground>
   )
 }

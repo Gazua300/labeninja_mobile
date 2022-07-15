@@ -1,29 +1,38 @@
 import { useContext, useState } from "react"
 import Context from "../../global/Context"
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
+import { convertPhone } from "../../utils/convertPhone"
 import { url } from "../../constants/urls"
-import { Picker } from '@react-native-picker/picker'
-import { View, Text, ImageBackground, StyleSheet, TextInput, TouchableOpacity } from "react-native"
+import {
+    View,
+    Text,
+    ImageBackground,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity
+} from "react-native"
 
 
 
 export default function Detail(props){
     const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [payment, setPayment] = useState('')
+    const [phone, setPhone] = useState('')
     const { job } = useContext(Context)
 
 
 
-    const contractJob = ()=>{
+    const contractJob = async()=>{
+        const id = await AsyncStorage.getItem('token')
         const body ={
             name,
-            email,
-            payment,
-            job: job.title
+            phone,
+            job: job.title,
+            client: id,
+            provider: job.id
         }
-        axios.post(`${url}/job`, body).then(res=>{
-            alert(`${job.title} contratado com sucesso`)
+        axios.post(`${url}/job/${job.id}`, body).then(res=>{
+            alert(res.data)
         }).catch(e=>{
             alert(e.response.data)
         })
@@ -32,7 +41,8 @@ export default function Detail(props){
 
     return(
         <ImageBackground style={styles.bgImage}
-            source={require('../../../assets/ninjaWallpaper.jpg')}>
+            source={require('../../../assets/terceirizacao.jpg')}>
+            <View style={styles.container}>
             <View style={styles.cardContainer}> 
                 <Text style={styles.title}>{job.title}</Text>
                 <View style={{margin:5}}>
@@ -40,13 +50,10 @@ export default function Detail(props){
                         <Text style={{fontWeight:'bold'}}>Descrição:</Text> {job.description}
                     </Text>
                     <Text style={{color:'whitesmoke'}}>
-                        <Text style={{fontWeight:'bold'}}>Preço:</Text> R$ {job.price},00
+                        <Text style={{fontWeight:'bold'}}>Telefone:</Text> {convertPhone(job.phone)},00
                     </Text>
                     <Text style={{color:'whitesmoke'}}>
-                        <Text style={{fontWeight:'bold'}}>Prazo:</Text> {new Date(job.dueDate).toLocaleDateString()}
-                    </Text>
-                    <Text style={{color:'whitesmoke'}}>
-                        <Text style={{fontWeight:'bold'}}>Forma de pagamento:</Text> {job.payment}
+                        <Text style={{fontWeight:'bold'}}>Atendimento:</Text> {job.period}
                     </Text>
                 </View>
             </View>
@@ -56,33 +63,20 @@ export default function Detail(props){
                     onChangeText={setName}
                     value={name}
                     placeholder='Nome do contratante'
-                    placeholderTextColor={'whitesmoke'}/>
+                    placeholderTextColor='rgba(255, 255, 255, 0.2)'/>
                 <TextInput style={styles.input}
-                    onChangeText={setEmail}
-                    value={email}
-                    placeholder='nome@email.com'
-                    placeholderTextColor={'whitesmoke'}/>
-                <View style={styles.pickerContainer}>
-                    <Picker 
-                        selectedValue={payment}
-                        onValueChange={(itemValue, itemIndex)=>
-                        setPayment(itemValue)}>                    
-                        
-                        <Picker.Item style={styles.pickerContent}
-                            label="Débito" value='Débito'/>
-                        <Picker.Item style={styles.pickerContent}
-                            label="Crédito" value='Crédito'/>
-                        <Picker.Item style={styles.pickerContent}
-                            label="Pix" value='Pix'/>
-                        <Picker.Item style={styles.pickerContent}
-                            label="Boleto" value='Boleto'/>
-
-                    </Picker>
+                    onChangeText={setPhone}
+                    value={phone}
+                    keyboardType='numeric'
+                    placeholder='Telefone(somente números)'
+                    placeholderTextColor='rgba(255, 255, 255, 0.2)'/>                
+                <View style={styles.btnContainer}>
+                    <TouchableOpacity style={styles.button}
+                        onPress={contractJob}>
+                        <Text style={{color:'whitesmoke'}}>Contratar</Text>
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={styles.button}
-                    onPress={contractJob}>
-                    <Text style={{color:'whitesmoke'}}>Contratar</Text>
-                </TouchableOpacity>
+            </View>
             </View>
         </ImageBackground>
     )
@@ -92,10 +86,15 @@ const styles = StyleSheet.create({
     bgImage: {
         flex: 1
       },
+    container: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.8)'
+    },
     cardContainer: {
         borderWidth: 1,
         borderColor: 'whitesmoke',
-        margin: 10,
+        marginTop: 50,
+        marginHorizontal: 10,
         borderRadius: 10,
         padding: 5
     },
@@ -112,22 +111,16 @@ const styles = StyleSheet.create({
         borderColor: 'whitesmoke',
         height: 40,
         fontSize: 18,
-        paddingLeft: 15,
+        paddingHorizontal: 10,
         color: 'whitesmoke'
     },
-    pickerContainer: {
-        borderWidth: 1,
-        borderColor: 'whitesmoke',
-        borderRadius: 10,
-        margin: 15
-    },
-    pickerContent: {
-        fontSize: 18
+    btnContainer: {
+        alignItems: 'center'
     },
     button: {
         backgroundColor: '#151E3D',
         padding: 5,
-        width: 250,
+        width: 150,
         alignItems: 'center',
         borderRadius: 10,
         marginHorizontal: '20%',

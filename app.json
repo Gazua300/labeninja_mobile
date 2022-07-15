@@ -9,11 +9,7 @@
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
-    },
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    },    
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -21,9 +17,10 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "gazua"
     },
-    "android": {      
+    "android": {
       "package": "com.gazua300.labeninja_mobile",
       "versionCode": 1
     },

@@ -1,5 +1,5 @@
 {
-  "name": "Labeninja",
+  "name": "labeninja",
   "version": "1.0.0",
   "scripts": {
     "start": "expo start --dev-client",
@@ -24,6 +24,7 @@
     "react-native-elements": "^3.4.2",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
+    "react-native-vector-icons": "^9.2.0",
     "react-native-web": "0.17.1"
   },
   "devDependencies": {

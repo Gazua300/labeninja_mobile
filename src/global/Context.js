@@ -1,5 +1,6 @@
 import React, { createContext, useState } from 'react'
 import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { url } from '../constants/urls'
 
 
@@ -13,7 +14,17 @@ export const Provider = (props)=>{
 
 
 
+  const getToken = async(tk)=>{
+    try{
 
+      await AsyncStorage.setItem('token', tk)
+
+    }catch(e){
+      alert(e)
+    }
+  }
+  
+  
   const getAllJobs = ()=>{
     axios.get(`${url}/jobs`).then(res=>{
       setJobs(res.data)
@@ -33,7 +44,8 @@ export const Provider = (props)=>{
    
 
 
-  return<Context.Provider value={{ cart, setCart, addToCart, getAllJobs, jobs, job, setJob, }}>
+  return<Context.Provider value={{ cart, setCart, addToCart, getAllJobs,
+  jobs, job, setJob, getToken}}>
           { props.children }
         </Context.Provider>
 }

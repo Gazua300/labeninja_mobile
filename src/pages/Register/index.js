@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { Picker } from '@react-native-picker/picker'
 import { url } from '../../constants/urls'
 import styles from './style'
 import {
@@ -10,7 +9,6 @@ import {
   TextInput,
   ImageBackground,
   TouchableOpacity,
-  Alert
 } from 'react-native'
 
 
@@ -18,9 +16,9 @@ import {
 export default function Register(props){
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [price, setPrice] = useState('')
-  const [payment, setPayment] = useState()
-  const [dueDate, setDueDate] = useState('')
+  const [phone, setPhone] = useState('')
+  const [period, setPeriod] = useState('')
+  const placeholderBackground = 'rgba(255, 255, 255, 0.2)'
 
 
 
@@ -28,15 +26,16 @@ export default function Register(props){
     const body = {
       title,
       description,
-      price,
-      payment,
-      dueDate
+      phone,
+      period
     }
+    
     axios.post(`${url}/jobs`, body).then(res=>{
       alert(`${title} cadastrado com sucesso!`)
     }).catch(err=>{
       alert(err.response.data)
     })
+    
   }
 
 
@@ -44,72 +43,55 @@ export default function Register(props){
 
   return(
     <ImageBackground
-      source={ require('../../../assets/ninjaWallpaper.jpg') }
+      source={ require('../../../assets/terceirizacao.jpg') }
       style={styles.bgImage}>
+      <View style={styles.container}>
+        <ScrollView>
+          <View style={styles.formContainer}>
+            <TextInput style={styles.input}
+              onChangeText={setTitle}
+              value={title}
+              placeholderTextColor={placeholderBackground}
+              placeholder='Título'
+              />
 
-      <ScrollView style={styles.inputContainer}>
-        <TextInput style={styles.input}
-          onChangeText={setTitle}
-          value={title}
-          placeholderTextColor={'whitesmoke'}
-          placeholder='Título'
-          />
+            <TextInput style={styles.textarea}
+              onChangeText={setDescription}
+              value={description}
+              multiline={true}
+              placeholderTextColor={placeholderBackground}
+              placeholder='Descrição dos seus serviços'
+              />
 
-        <TextInput style={styles.input}
-          onChangeText={setDescription}
-          value={description}
-          placeholderTextColor={'whitesmoke'}
-          placeholder='Descrição'
-          />
+            <TextInput style={styles.input}
+              onChangeText={setPhone}
+              value={phone}
+              keyboardType='numeric'
+              placeholderTextColor={placeholderBackground}
+              placeholder='Telefone'
+              />
 
-        <TextInput style={styles.input}
-          onChangeText={setPrice}
-          value={price}
-          keyboardType='numeric'
-          placeholderTextColor={'whitesmoke'}
-          placeholder='Preço'
-          />
+            <TextInput style={styles.textarea}
+              onChangeText={setPeriod}
+              value={period}
+              placeholderTextColor={placeholderBackground}
+              placeholder='Período de atendimento'
+              />
 
-        <TextInput style={styles.input}
-          onChangeText={setDueDate}
-          value={dueDate}
-          placeholderTextColor={'whitesmoke'}
-          placeholder='dd/mm/aaaa'
-          />
 
-        <Text style={styles.txtPicker}>Formas de pagamento:</Text>
-        <View style={styles.selectContainer}>
-        <Picker style={styles.pickerContainer}
-          selectedValue={payment}
-          onValueChange={(itemValue, itemIndex)=>
-          setPayment(itemValue) }>
-
-          <Picker.Item style={styles.pickerContent}
-            label='Cartão de crédito' value='Cartão de crédito'/>
-          <Picker.Item style={styles.pickerContent}
-            label='Cartão de débito' value='Cartão de débito'/>
-          <Picker.Item style={styles.pickerContent}
-            label='Paypal' value='Paypal'/>
-          <Picker.Item style={styles.pickerContent}
-            label='Boleto' value='Boleto'/>
-          <Picker.Item style={styles.pickerContent}
-            label='Pix' value='Pix'/>
-
-        </Picker>
-        </View>
-
-        <View style={styles.btnContainer}>
-          <TouchableOpacity style={styles.btnNav}
-            onPress={registJob}>
-            <Text style={styles.txtBtn}>Cadastrar serviço</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnNav}
-            onPress={()=> props.navigation.navigate('List')}>
-            <Text style={styles.txtBtn}>Lista</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-
+            <View style={styles.btnContainer}>
+              <TouchableOpacity style={styles.btnNav}
+                onPress={registJob}>
+                <Text style={styles.txtBtn}>Cadastrar serviço</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.btnNav}
+                onPress={()=> props.navigation.navigate('List')}>
+                <Text style={styles.txtBtn}>Lista</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
     </ImageBackground>
   )
 }

@@ -5,29 +5,44 @@ import {
   Text,
   ImageBackground,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  BackHandler
 } from 'react-native'
 
 
 
 export default function Home(props){
+
+
+  BackHandler.addEventListener('hardwareBackPress', ()=>{
+    props.navigation.navigate('Home')
+    
+    return true 
+  })
+
   return(
     <ImageBackground
-      source={ require('../../../assets/ninjaWallpaper.jpg') }
+      source={ require('../../../assets/terceirizacao.jpg') }
       style={styles.bgImage}>
 
       <View style={styles.container}>
+        <Text style={styles.title}>Sejam bem vindos!</Text>
+        <Text style={styles.txtStyle}>
+          Essa é a nossa aplicação de terceirização
+          de serviços. Onde você poderá contratar uma prestação de serviços ou
+          cadastrar um serviço seu.
+        </Text>
         <Image
           style={styles.imgPic}
-          source={ require('../../../assets/ninja.png') }/>
+          source={ require('../../../assets/homeIcon.jpg') }/>
         <View style={styles.btnContainer}>
           <TouchableOpacity style={styles.btnNav}
             onPress={()=> props.navigation.navigate('Register')}>
-            <Text style={styles.txtBtn}>Cadastrar um ninja</Text>
+            <Text style={styles.txtBtn}>Cadastrar serviço</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.btnNav}
             onPress={()=> props.navigation.navigate('List')}>
-            <Text style={styles.txtBtn}>Contratar um ninja</Text>
+            <Text style={styles.txtBtn}>Contratar serviço</Text>
           </TouchableOpacity>
         </View>
       </View>

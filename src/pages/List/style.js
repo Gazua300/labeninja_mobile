@@ -5,21 +5,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    paddingTop: 30
   },
   bgImage: {
     flex: 1
   },
   btnContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+    marginTop: 10
   },
   btnNav: {
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#151E3D',
-    width: 150,
     height: 30,
     borderRadius: 15,
     marginTop: 10
@@ -39,7 +38,7 @@ const styles = StyleSheet.create({
     padding: 5
   },
   cardContent: {
-    margin: 10
+    margin: 10,
   }
 })
 
