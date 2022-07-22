@@ -8,7 +8,7 @@ const Context = createContext()
 
 
 export const Provider = (props)=>{
-  const [cart, setCart] = useState([])
+  const [providerJob, setProviderJob] = useState([])
   const [jobs, setJobs] = useState([])
   const [job, setJob] = useState({})
 
@@ -34,18 +34,27 @@ export const Provider = (props)=>{
   }
 
 
-  const addToCart = (job)=>{
-    const newCart = [...cart, job]
-    setCart(newCart)
+  const jobByProvider = async()=>{
+    const id = AsyncStorage.getItem('token')
+
+    axios.get(`${url}/provider/jobs/${id}`).then(res=>{
+      console.log(res.data)
+    }).catch(e=>{
+      alert(e.response.data)
+    })
   }
+
+
+  
 
 
   
    
 
 
-  return<Context.Provider value={{ cart, setCart, addToCart, getAllJobs,
-  jobs, job, setJob, getToken}}>
+  return<Context.Provider value={{
+    getAllJobs, jobs, job, setJob, getToken, jobByProvider, providerJob
+  }}>
           { props.children }
         </Context.Provider>
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { url } from '../../constants/urls'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import styles from './style'
 import {
   View,
@@ -18,16 +19,18 @@ export default function Register(props){
   const [description, setDescription] = useState('')
   const [phone, setPhone] = useState('')
   const [period, setPeriod] = useState('')
-  const placeholderBackground = 'rgba(255, 255, 255, 0.2)'
+  const placeholderBackground = 'rgba(255, 255, 255, 0.5)'
 
 
 
-  const registJob = ()=>{
+  const registJob = async()=>{
+    const id = await AsyncStorage.getItem('token')
     const body = {
       title,
       description,
       phone,
-      period
+      period,
+      provider: id
     }
     
     axios.post(`${url}/jobs`, body).then(res=>{

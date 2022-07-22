@@ -5,6 +5,7 @@ import { Provider } from './global/Context'
 import Person from 'react-native-vector-icons/Ionicons'
 import HomeIcon from 'react-native-vector-icons/Entypo'
 import Login from './pages/Login/Login'
+import Signup from './pages/Signup/Signup'
 import Home from './pages/Home'
 import List from './pages/List'
 import Register from './pages/Register'
@@ -30,6 +31,13 @@ export default function App(){
               <Stack.Screen
                 name='Login'
                 component={Login}/>
+              
+              <Stack.Screen
+                name='Signup'
+                component={Signup}
+                options={({navigation})=>({
+                  title: 'Criar Conta'
+                })} />
 
               <Stack.Screen
                 name='Home'
@@ -119,7 +127,7 @@ export default function App(){
                   name='EditUser'
                   component={EditUser}
                   options={({navigation})=>({
-                    title:'Atualizar Dados',
+                    title:'Seus serviços cadastrados',
                     headerRight: ()=>(
                       <TouchableOpacity onPress={()=> navigation.navigate('Home')}>
                         <HomeIcon name='home' size={30} color='#151E3D'/>

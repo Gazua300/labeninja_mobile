@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Context from "../../global/Context"
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
@@ -18,7 +18,13 @@ import {
 export default function Detail(props){
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
-    const { job } = useContext(Context)
+    const { job, providerJob, jobByProvider } = useContext(Context)
+console.log('Oxe:', providerJob)
+
+
+    useEffect(()=>{
+        jobByProvider()
+    }, [])
 
 
 
@@ -36,6 +42,12 @@ export default function Detail(props){
         }).catch(e=>{
             alert(e.response.data)
         })
+    }
+
+
+    const limpar = ()=>{
+        setName('')
+        setPhone('')
     }
 
 
@@ -72,6 +84,10 @@ export default function Detail(props){
                     placeholderTextColor='rgba(255, 255, 255, 0.2)'/>                
                 <View style={styles.btnContainer}>
                     <TouchableOpacity style={styles.button}
+                        onPress={limpar}>
+                        <Text style={{color:'whitesmoke'}}>Limpar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button}
                         onPress={contractJob}>
                         <Text style={{color:'whitesmoke'}}>Contratar</Text>
                     </TouchableOpacity>
@@ -88,7 +104,7 @@ const styles = StyleSheet.create({
       },
     container: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.8)'
+        backgroundColor: 'rgba(0, 0, 0, 0.6)'
     },
     cardContainer: {
         borderWidth: 1,
@@ -115,6 +131,9 @@ const styles = StyleSheet.create({
         color: 'whitesmoke'
     },
     btnContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center'
     },
     button: {
@@ -123,7 +142,6 @@ const styles = StyleSheet.create({
         width: 150,
         alignItems: 'center',
         borderRadius: 10,
-        marginHorizontal: '20%',
-        marginTop: 20
+        margin: 20
     }
 })

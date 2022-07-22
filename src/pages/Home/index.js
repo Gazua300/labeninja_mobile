@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './style'
 import {
   View,
@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   BackHandler
 } from 'react-native'
+//import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 
@@ -19,6 +20,13 @@ export default function Home(props){
     
     return true 
   })
+
+
+  // useEffect(()=>{
+  //   (async()=>{
+  //     await AsyncStorage.clear()
+  //   })()
+  // }, [])
 
   return(
     <ImageBackground

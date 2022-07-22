@@ -3,21 +3,25 @@ import axios from 'axios'
 import { url } from '../../constants/urls'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Context from '../../global/Context'
+import Eye from 'react-native-vector-icons/Entypo'
 import {
     View,
     Text,
     TextInput,
     TouchableOpacity,
     ImageBackground,
-    StyleSheet
+    StyleSheet,
+    ScrollView
 } from 'react-native'
 
 
 
 const Login = (props)=>{
     const { getToken } = useContext(Context)
-    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
+    const [eyeIcon, setEyeIcon] = useState('eye-with-line')
+    const [secureText, setSecureText] = useState(true)
 
 
     useEffect(()=>{
@@ -31,13 +35,26 @@ const Login = (props)=>{
 
 
 
+    
+    const visibility = ()=>{
+        if(eyeIcon === 'eye-with-line'){
+            setEyeIcon('eye')
+            setSecureText(false)
+        }else if(eyeIcon === 'eye'){
+            setEyeIcon('eye-with-line')
+            setSecureText(true)
+        }
+    }
+
+
     const login = ()=>{
         const body = {
-            email,
+            phone,
             password
         }
         axios.post(`${url}/login`, body).then(res=>{
             getToken(res.data)
+            props.navigation.navigate('Home')
         }).catch(e=>{
             alert(e.response.data)
         })
@@ -45,7 +62,7 @@ const Login = (props)=>{
 
 
     const limpar = ()=>{
-        setEmail('')
+        setPhone('')
         setPassword('')
     }
 
@@ -54,19 +71,24 @@ const Login = (props)=>{
         <ImageBackground
             style={{flex:1}}
             source={require('../../../assets/terceirizacao.jpg')}>
-
             <View style={styles.container}>            
+            <ScrollView>
                 <TextInput style={styles.input}
-                    onChangeText={setEmail}
-                    value={email}
-                    placeholder='nome@email.com'
+                    onChangeText={setPhone}
+                    value={phone}
+                    placeholder='Telefone(somente números)'
+                    keyboardType='numeric'
                     placeholderTextColor='rgba(255, 255, 255, 0.2)'/>
                 <TextInput style={styles.input}
                     onChangeText={setPassword}
                     value={password}
-                    secureTextEntry={true}
-                    placeholder='nome@email.com'
+                    secureTextEntry={secureText}
+                    placeholder='Sua senha'
                     placeholderTextColor='rgba(255, 255, 255, 0.2)'/>
+                <TouchableOpacity style={styles.eye}
+                    onPress={visibility}>
+                    <Eye name={eyeIcon} size={25} color='whitesmoke'/>
+                </TouchableOpacity>
                 
                 <View style={styles.btnContainer}>
                     <TouchableOpacity style={styles.button}
@@ -87,11 +109,13 @@ const Login = (props)=>{
                         color:'whitesmoke',
                         fontSize: 18
                     }}>
-                        Ainda não tem cadastro? Clique <Text style={{color:'blue'}}>
+                        Ainda não tem cadastro? Clique <Text style={{color:'blue'}}
+                            onPress={()=> props.navigation.navigate('Signup')}>
                             aqui
                         </Text>
                     </Text>
                 </View>
+            </ScrollView>
             </View>
         </ImageBackground>
     )
@@ -100,7 +124,7 @@ const Login = (props)=>{
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
         paddingTop: 50,
         padding: 10
     },
@@ -113,6 +137,11 @@ const styles = StyleSheet.create({
         fontSize: 18,
         paddingHorizontal: 10,
         color:'whitesmoke'
+      },
+      eye: {
+        position: 'absolute',
+        right: '6%',
+        top: '32%'
       },
       btnContainer: {
         display: 'flex',
